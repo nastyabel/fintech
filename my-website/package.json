@@ -11,8 +11,7 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids",
-    "deploy": "dotenv -e.env docusaurus deploy"
+    "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
     "@akebifiky/remark-simple-plantuml": "^1.0.2",
