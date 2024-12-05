@@ -7,7 +7,7 @@ const config = {
   title: 'Документация проекта', //Название сайта на начальной странице
   tagline: 'Техническая документация для Made by hand', // Описание сайта на начальной странице
   favicon: 'img/favicon.ico', // Иконка сайта
-  url: 'https://nastyabel.github.io/', // Адрес gitlab pages, обычно https://<username>.github.io
+  url: 'https://nastyabel.github.io', // Адрес gitlab pages, обычно https://<username>.github.io
   baseUrl: 'fintech', // Базовый url, обычно название репозитория
   organizationName: 'nastyabel', // Имя GitHub пользователя
   projectName: 'fintech', // Имя репозитория
