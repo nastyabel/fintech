@@ -1,0 +1,585 @@
+openapi: "3.0.2"
+info:
+  title: Made by hand API
+  description: API для реализации экранов сервиса Made by hand.
+  version: "1.0"
+security:
+  - BearerAuth: []
+servers:
+  - url: https://madebyhand.com
+tags:
+  - name: orders
+    description: Методы работы с заказами
+  - name: users
+    description: Методы работы с данными о пользователях
+  - name: chats
+    description: Методы работы с чатами
+paths:
+  /api/v1/orders/newOrder:
+    post:
+      tags:
+        - orders
+      summary: Создание нового заказа
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderDetails"
+      responses:
+        "201":
+          description: Успешное создание заказа
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "400":
+          description: Ошибка валидации
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/orders/{orderId}/view:
+    get:
+      tags:
+        - orders
+      summary: Получение детальной информации о заказе
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор заказа
+            type: string
+      responses:
+        "200":
+          description: Успешное получение информации о заказе
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDetails"
+        "404":
+          description: Заказ не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/orders/{orderId}/preview:
+    get:
+      tags:
+        - orders
+      summary: Получение превью информации о заказе
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор заказа
+            type: string
+      responses:
+        "200":
+          description: Успешное получение информации о заказе
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDetailsPreview"
+        "404":
+          description: Заказ не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/orders/{orderId}/recommendations:
+    get:
+      tags:
+        - orders
+      summary: Получение рекомендаций мастеров для заказа
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор заказа
+            type: string
+      responses:
+        "200":
+          description: Рекомендованные мастера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecommendedMasters"
+        "404":
+          description: Заказ не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/users/{userId}/masterProfile:
+    get:
+      tags:
+        - users
+      summary: Получение информации о профиле мастера
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор пользователя
+            type: string
+      responses:
+        "200":
+          description: Информация о профиле мастера
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MasterProfile"
+        "404":
+          description: Профиль не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/users/{userId}/info:
+    get:
+      tags:
+        - users
+      summary: Получение имени и аватарки пользователя
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор пользователя
+            type: string
+      responses:
+        "200":
+          description: Информация о пользователе
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        "404":
+          description: Профиль не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/users/{userId}/chats:
+    get:
+      tags:
+        -  users
+      summary: Получение чатов пользователя
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор пользователя
+            type: string
+      responses:
+        "200":
+          description: Информация о чатах пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserChats"
+        "404":
+          description: Профиль не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+  /api/v1/users/{userId}/ordersHistory:
+    get:
+      tags:
+        -  users
+      summary: Получение истории заказов у заказчика
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            description: Идентификатор пользователя
+            type: string
+      responses:
+        "200":
+          description: Информация о заказах пользователя
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrdersHistory"
+        "404":
+          description: Профиль не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"           
+  /api/v1/chats/{chatId}:
+    get:
+      tags:
+        -  chats
+      summary: Получение информации о чате
+      parameters:
+        - name: chatId
+          in: path
+          required: true
+          schema:
+            description: ID чата
+            type: string
+      responses:
+        "200":
+          description: Информация о чате
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatDetails"
+        "404":
+          description: Чат не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+        "500":
+          description: Внутренняя ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorStructure"
+
+components:
+  schemas:
+    OrderDetails:
+      description: Данные по новому заказу
+      type: object
+      required:
+        - userId
+        - orderTitle
+        - orderDescription
+        - itemType
+        - skillLevel
+        - styleTags
+        - expectedPrice
+      properties:
+        userId:
+          description: Идентификатор заказчика
+          type: string
+        orderTitle:
+          description: Название заказа
+          type: string
+        orderDescription:
+          description: Описание идеи заказа
+          type: string
+        itemType:
+          description: Тип изделия в заказе (вязаное/шитое)
+          type: string
+          enum:
+            - knitted
+            - sewn
+        skillLevel:
+          $ref: "#/components/schemas/SkillLevel"
+        styleTags:
+          $ref: "#/components/schemas/StyleTags"
+        clothesCategory:
+          description: Категория одежды для идеи в заказе (например, заказывают юбку)
+          type: string
+        expectedPrice:
+          description: Предпочтения по цене за изготовление изделия
+          type: number
+        photoReferences:
+          description: URL фото-референсов, которые прикрепил пользователь
+          type: array
+          items:
+            type: string
+    OrderResponse:
+      description: Ответ на успешное создание заказа
+      type: object
+      required:
+        - orderId
+      properties:
+        orderId:
+          description: Идентификатор заказа
+          type: string
+    OrderDetailsPreview:
+      description: Данные по заказу (превью)
+      type: object
+      required:
+        - orderTitle
+        - expectedPrice
+      properties:
+        orderTitle:
+          description: Название заказа
+          type: string
+        expectedPrice:
+          description: Предпочтения по цене за изготовление изделия
+          type: number
+    RecommendedMasters:
+      description: Список рекомендованных мастеров
+      type: array
+      items:
+        $ref: "#/components/schemas/MasterPreview"
+    MasterPreview:
+      description: Превью профиля мастера
+      type: object
+      required:
+        - firstName
+        - avatarUrl
+        - city
+        - skillLevel
+        - styleTags
+      properties:
+        userId:
+          description: Идентификатор мастера
+          type: string
+        firstName:
+          description: Имя
+          type: string
+        middleName:
+          description: Отчество
+          type: string
+        lastName:
+          description: Фамилия
+          type: string
+        avatarUrl:
+          description: URL аватарки
+          type: string
+        city:
+          description: Город
+          type: string
+        skillLevel:
+          $ref: "#/components/schemas/SkillLevel"
+        styleTags:
+          $ref: "#/components/schemas/StyleTags"
+    MasterProfile:
+      description: Профиль мастера
+      type: object
+      required:
+        - firstName
+        - avatarUrl
+        - city
+        - skillLevel
+        - activity
+        - styleTags
+        - profileDescription
+      properties:
+        firstName:
+          description: Имя
+          type: string
+        middleName:
+          description: Отчество
+          type: string
+        lastName:
+          description: Фамилия
+          type: string
+        avatarUrl:
+          description: URL аватарки
+          type: string
+        city:
+          description: Город
+          type: string
+        skillLevel:
+          $ref: "#/components/schemas/SkillLevel"
+        activity:
+          description: Тип занятия (вяжу/шью)
+          type: string
+          enum:
+            - knit
+            - sew
+        styleTags:
+          $ref: "#/components/schemas/StyleTags"
+        profileDescription:
+          description: Описание профиля
+          type: string
+        workExamplesPhoto:
+          description: Фото-примеры работ (URL)
+          type: array
+          items:
+            type: string
+        socialMediaLinks:
+          description: Ссылки на соц. сети
+          type: array
+          items:
+            type: object
+            properties:
+              socialMedia:
+                description: Социальная сеть (Инстаграм, ВК и т.д.)
+                type: string
+              socialMediaLink:
+                description: Ссылка на аккаунт в соц. сети
+                type: string
+    UserInfo:
+      description: Информация о пользователе
+      type: object
+      required:
+        - firstName
+        - avatarUrl
+      properties:
+        firstName:
+          description: Имя
+          type: string
+        avatarUrl:
+          description: URL аватарки
+          type: string
+    UserChats:
+      description: Информация о чатах пользователя
+      type: array
+      items:
+        $ref: "#/components/schemas/UserChat"
+    UserChat:
+      description: Информация о чате в ленте чатов
+      type: object
+      required:
+        - chatId
+        - recipientId
+        - lastMessageDate
+        - orderId
+      properties:
+        chatId:
+          description: ID чата
+          type: string
+        recipientId:
+          description: UserId собеседника в чате 
+          type: string
+        lastMessageDate:
+          description: Дата последнего сообщения в чате
+          type: string
+        orderId:
+          description: ID заказа, по которому идет общение в чате 
+          type: string
+    ChatDetails:
+      description: Информация в чате
+      type: object
+      required:
+        - recipientId
+      properties:
+        recipientId:
+          description: UserId собеседника в чате 
+          type: string
+        messages:
+          description: Сообщения в чате 
+          type: array
+          items:
+            $ref: "#/components/schemas/Message"
+    Message:
+      description: Сообщение в чате
+      type: object
+      required:
+        - senderId
+        - date
+        - content
+      properties:
+        senderId:
+          description: UserId пользователя, который отправил сообщение
+          type: string
+        date:
+          description: Дата и время отправки сообщения
+          type: string
+          format: date-time
+        content:
+          description: Текст сообщения
+          type: string
+    OrdersHistory:
+      description: ID заказов пользователя
+      type: array
+      items:
+        $ref: "#/components/schemas/HistoricalOrder"
+    HistoricalOrder:
+      description: Описание исторического заказа пользователя
+      type: object
+      required:
+        - orderId
+        - orderTitle
+        - expectedPrice
+        - orderDate
+      properties:
+        orderId:
+          description: ID заказа
+          type: string
+        orderTitle:
+          description: Название заказа
+          type: string
+        expectedPrice:
+          description: Предпочтения по цене за изготовление изделия
+          type: number
+        orderDate:
+          description: Дата заказа
+          type: string
+          format: date-time
+    SkillLevel:
+      description: Уровень навыков - начинающий/средний/опытный
+      type: string
+      enum:
+        - beginner
+        - intermediate
+        - expert
+    StyleTags:
+      description: Выбранные тэги по стилю (например, классический, спортивный и т.д.)
+      type: array
+      items:
+        description: Тэг
+        type: string
+    ErrorStructure:
+      description: Структура ошибки
+      type: object
+      required:
+        - errorCode
+        - errorDescription
+      properties:
+        errorCode:
+          description: Код ошибки
+          type: string
+          example: "ERROR-98"
+        errorDescription:
+          description: Детали ошибки
+          type: string
+  securitySchemes:
+    BearerAuth:
+        type: http
+        scheme: bearer
