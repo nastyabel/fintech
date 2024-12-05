@@ -72,6 +72,16 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          {
+            to: '/fintech/docs/', 
+            label: 'Docs',
+            position: 'left',
+          },
+          {
+            to: '/fintech/blog', 
+            label: 'Blog',
+            position: 'left',
+          }
         ],
       },
       // тут можно настроить элементы футера
@@ -83,7 +93,7 @@ const config = {
             items: [
               {
                 label: 'Docs',
-                to: '/docs/',
+                to: '/fintech/docs/',
               },
             ],
           },
@@ -109,7 +119,7 @@ const config = {
             items: [
               {
                 label: 'Blog',
-                to: '/blog',
+                to: '/fintech/blog',
               },
               {
                 label: 'GitHub',
