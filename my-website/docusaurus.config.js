@@ -4,10 +4,10 @@ const simplePlantUML = require("@akebifiky/remark-simple-plantuml"); // объя
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Документация проекта', //Название сайта на начальной странице
+  title: 'Made by hand', //Название сайта на начальной странице
   tagline: 'Техническая документация для Made by hand', // Описание сайта на начальной странице
   favicon: 'img/favicon.ico', // Иконка сайта
-  url: 'https://nastyabel.github.io', // Адрес gitlab pages, обычно https://<username>.github.io
+  url: 'https://nastyabel.github.io/fintech/', // Адрес gitlab pages, обычно https://<username>.github.io
   baseUrl: 'fintech', // Базовый url, обычно название репозитория
   organizationName: 'nastyabel', // Имя GitHub пользователя
   projectName: 'fintech', // Имя репозитория
@@ -46,7 +46,7 @@ const config = {
           {
             id: 'madebyhand',
             spec: 'api_specs/openapi.yaml',
-          }
+          },
         ],
         theme: {
           primaryColor: '#1890ff',
@@ -72,31 +72,12 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
-          {
-            to: '/fintech/docs/', 
-            label: 'Docs',
-            position: 'left',
-          },
-          {
-            to: '/fintech/blog', 
-            label: 'Blog',
-            position: 'left',
-          }
         ],
       },
       // тут можно настроить элементы футера
       footer: {
         style: 'dark',
         links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Docs',
-                to: '/fintech/docs/',
-              },
-            ],
-          },
           {
             title: 'Community',
             items: [
@@ -117,10 +98,6 @@ const config = {
           {
             title: 'More',
             items: [
-              {
-                label: 'Blog',
-                to: '/fintech/blog',
-              },
               {
                 label: 'GitHub',
                 href: 'https://github.com/facebook/docusaurus',
